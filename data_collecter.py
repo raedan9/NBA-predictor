@@ -55,8 +55,11 @@ for i in range(10):
         df = df.drop(df[df["Tm"] == "Tm"].index)
         df = df.drop(df[df["Notes"] == "Play-In Game"].index)   
 
+        df.insert(0, "Season", i)
         df.insert(6, "Team", nba_teams[team])
 
+        print(df)
+        
         teams_done[team] = nba_teams[team]
 
         for team_done in teams_done.keys():
