@@ -29,12 +29,12 @@ def time_converter(input):
 
 df["Date Time"] = pd.to_datetime(df["Date Time"].apply(time_converter), format="%a, %b %d, %Y %H:%M")
 
+df = df[["Season", "G", "Date Time", "Team", "Opponent", "W/L", "Tm", "Opp", "W", "L"]]
+
 df["Tm"] = df["Tm"].apply(int)
 df["Opp"] = df["Opp"].apply(int)
 df["W"] = df["W"].apply(int)
 df["L"] = df["L"].apply(int)
-
-df = df[["Season", "G", "Date Time", "Team", "Opponent", "W/L", "Tm", "Opp", "W", "L"]]
 
 df.insert(10, "OW", 0)
 df.insert(11, "OL", 0)
@@ -104,7 +104,10 @@ for index, row in df.iterrows():
     #if row["W"] + row["L"] == 82 and row["Season"] == 9:
         #print(row["Season"], row["Team"], row["W"], row["L"])
 
+df = df.drop("index", axis=1)
 
-df = df[["Season", "G", "Date Time", "Team", "Opponent", "W/L", "Tm", "Opp", "W", "L"]]
+df["W/L"] = df["W/L"].replace('W', 1)
+df["W/L"] = df["W/L"].replace('L', 0)
 
+print(df)
 df.to_pickle("C:/Users/raeda/NBA-predictor/Processed_Data.pkl")
